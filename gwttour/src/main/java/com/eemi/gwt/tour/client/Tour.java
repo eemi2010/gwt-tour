@@ -53,6 +53,10 @@ public class Tour {
         this.setSteps(steps);
     }
 
+    public Tour() {
+        super();    //To change body of overridden methods use File | Settings | File Templates.
+    }
+
     /**
      * Default bubble width. Default: 280.
      * 

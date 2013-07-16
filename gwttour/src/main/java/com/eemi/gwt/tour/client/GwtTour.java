@@ -126,6 +126,14 @@ public class GwtTour {
         return Long.toString(Math.abs(random.nextLong()), 36);
     }
 
+    /**
+     *  Checks for tour state saved in sessionStorage/cookies and returns the state if it exists. Use this method to determine whether or not you should resume a tour.
+      * @return
+     */
+    public static native String getState()/*-{
+        $wnd.hopscotch.getState();
+    }-*/;
+
     private static native void _startTour(JavaScriptObject tour)/*-{
 		$wnd.hopscotch.startTour(tour);
     }-*/;
@@ -137,5 +145,7 @@ public class GwtTour {
     private static native void _createCallOut(JavaScriptObject callout)/*-{
 		$wnd.hopscotch.getCalloutManager().createCallout(callout);
     }-*/;
+
+
 
 }
