@@ -163,7 +163,7 @@ public class GwtTour {
     }-*/;
 
     private static native void _createCallOut(JavaScriptObject callout)/*-{
-		$wnd.hopscotch.getCalloutManager().createCallout(callout); hhlhlhlhlh
+		$wnd.hopscotch.getCalloutManager().createCallout(callout);
     }-*/;
 
 
