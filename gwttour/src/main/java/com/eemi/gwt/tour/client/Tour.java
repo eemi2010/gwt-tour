@@ -192,6 +192,15 @@ public class Tour {
     }
 
     /**
+     * Invoked when the tour is close.
+     *
+     * @param callback
+     */
+    public void onClose(Function callback) {
+        peer.onClose(callback);
+    }
+
+    /**
      * Label for next button
      *
      * @param value
