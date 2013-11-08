@@ -17,6 +17,7 @@ package com.eemi.gwt.tour.client;
 
 import java.util.Random;
 
+import com.eemi.gwt.tour.client.jso.Function;
 import com.google.gwt.core.client.JavaScriptObject;
 
 /**
@@ -134,6 +135,25 @@ public class GwtTour {
         $wnd.hopscotch.getState();
     }-*/;
 
+    /**
+     * Adds a callback for one of the event types. Valid event types are: start, end, next, prev, show, close, error
+     * @param event , the event  to listen to
+     * @param callback ,the callback to call when the event occurs.
+     */
+
+    public static native  void listen(String event, Function callback)/*-{
+        $wnd.hopscotch.listen(event,function(){
+          callback.@com.eemi.gwt.tour.client.jso.Function::execute()();
+        });
+    }-*/;
+
+
+    public static native  void unlisten(String event, Function callback)/*-{
+        $wnd.hopscotch.unlisten(event,function(){
+            callback.@com.eemi.gwt.tour.client.jso.Function::execute()();
+        });
+    }-*/;
+
     private static native void _startTour(JavaScriptObject tour)/*-{
 		$wnd.hopscotch.startTour(tour);
     }-*/;
@@ -143,7 +163,7 @@ public class GwtTour {
     }-*/;
 
     private static native void _createCallOut(JavaScriptObject callout)/*-{
-		$wnd.hopscotch.getCalloutManager().createCallout(callout);
+		$wnd.hopscotch.getCalloutManager().createCallout(callout); hhlhlhlhlh
     }-*/;
 
 
