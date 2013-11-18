@@ -106,12 +106,12 @@
   // Define the tour!
   Tour tour = new Tour("myTour");
   
-  TourStep step = new TourStep("header", Placement.RIGHT);
+  TourStep step = new TourStep(Placement.RIGHT, "header");
   step.setContent("This is the header of my page");
   step.setTitle("My Header");
   tour.addStep(step);
   
-  step = new TourStep(Document.get().getElementById("content"), Placement.LEFT);
+  step = new TourStep(Placement.LEFT, Document.get().getElementById("content"));
   step.setContent("THere is where I put my content.");
   step.setTitle("My content");
   tour.addStep(step);
@@ -158,15 +158,15 @@
         <div class="span7">
           <pre><code id="basic-options">
      
-     TourStep step1 = new TourStep("header", Placement.BOTTOM);
+     TourStep step1 = new TourStep(Placement.BOTTOM, "header");
      step1.setTite("This is the navigation menu");
      step1.setContent("Use the links here to get around the site");
      
-     TourStep step2 = new TourStep("profile-pic", Placement.RIGHT);
+     TourStep step2 = new TourStep(Placement.RIGHT, "profile-pic");
      step2.setTite("Your profile picture");
      step2.setContent("Upload a profile picture here.");
      
-     TourStep step2 = new TourStep("inbox", Placement.BOTTOM);
+     TourStep step2 = new TourStep(Placement.BOTTOM, "inbox");
      step2.setTite("Your inbox");
      step2.setContent("Messages from other users will appear here.");
      
