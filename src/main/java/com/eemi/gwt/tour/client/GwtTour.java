@@ -18,7 +18,11 @@ package com.eemi.gwt.tour.client;
 import java.util.Random;
 
 import com.eemi.gwt.tour.client.jso.Function;
+import com.eemi.gwt.tour.client.resources.GwtTourResources;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.ScriptInjector;
+import com.google.gwt.dom.client.StyleInjector;
 
 /**
  * Main GwtTour class
@@ -30,6 +34,25 @@ public class GwtTour {
 
     private GwtTour() {
 
+    }
+    
+    /**
+     * Check if the script is loaded
+     * @return
+     */
+    public static native boolean isLoaded() /*-{
+        return $wnd.hopscotch !== undefined;
+    }-*/;
+    
+    /**
+     * Load the javasccript and the stylesheet by using the ScriptInjector
+     */
+    public static void load() {
+        if (!isLoaded()) {
+            GwtTourResources resources = GWT.create(GwtTourResources.class);
+            StyleInjector.inject(resources.css().getText());
+            ScriptInjector.fromString(resources.js().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
+        }
     }
 
     /**
