@@ -183,15 +183,6 @@ public class Tour {
     }
 
     /**
-     * Invoked when the tour is ended.
-     * 
-     * @param callback
-     */
-    public void onEnd(Function callback) {
-        peer.onEnd(callback);
-    }
-
-    /**
      * Invoked when the user closed the tour
      * before finishing it.
      *
@@ -199,6 +190,15 @@ public class Tour {
      */
     public void onClose(Function callback){
         peer.onClose(callback);
+    }
+
+    /**
+     * Invoked when the tour is ended.
+     * 
+     * @param callback
+     */
+    public void onEnd(Function callback) {
+        peer.onEnd(callback);
     }
 
     /**
