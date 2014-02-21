@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="css/bootstrap.css" rel="stylesheet"></link>
+    <link href="css/flat-ui.css" rel="stylesheet"></link>
+    <link href="css/demo.css" rel="stylesheet"></link>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41931655-1', 'github.com');
+  ga('send', 'pageview');
+  
+
+  
+  
+</script>
+  </head>
+  <body>
+   <div id="main">
+    <div class="demo-headline">
+      <h1 id="gwt-tour-title" class="demo-logo">GWT-Tour</h1>
+    </div>
+    <div id="toc">
+      <h1>Contents</h1>
+      <ul>
+        <li><a href="#what-is">What is GWT-Tour?</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#general-usage">General Usage</a></li>
+        <li>
+          <a href="#defining-a-tour">Defining a Tour</a>
+          <ul>
+            <li><a href="#basic-step-options">Basic step options</a></li>
+            <li><a href="#all-step-options">All step options</a></li>
+            <li><a href="#setting-tour-options">Setting tour options</a></li>
+          </ul>
+        </li>
+        <li><a href="#api-methods">API Methods</a></li>
+        <li><a href="#tour-example">Tour Example</a></li>
+        <li><a href="#gwt-tour-callouts">GWT-Tour Callouts</a></li>
+      </ul>
+    </div>
+    <div id="content">
+      <h1 id="what-is">What is GWT-Tour?</h1>
+      <p>GWT-Tour is a GWT library to make it easy for developers to add product tours to their pages. GWT-Tour accepts a Tour object as input and provides an API for the developer to control rendering the tour display and managing the tour progress.</p>
+
+      <p class="text-center"><button id="startTourBtn" class="btn btn-large btn-primary">Take a tour</button></p>
+
+      <h1 id="features">Features</h1>
+
+      <div class="row">
+        <div class="span3">
+          <div class="tile">
+            <img class="tile-image big-illustration" src="img/time.png"/>
+            <h3 class="tile-title">Event Callbacks</h3>
+            <p>Callbacks for tour events: onStart, onEnd, onShow, onNext, onPrev, onClose, onError</p>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="tile">
+            <img class="tile-image big-illustration" src="img/clipboard.png"/>
+            <h3 class="tile-title">Multi-page tours</h3>
+            <p>Take your tour across pages! GWT-Tour saves state using HTML5 sessionStorage if available and falls back to using cookies as a default.</p>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="tile">
+            <img class="tile-image big-illustration" src="img/map.png"/>
+            <h3 class="tile-title">i18n support</h3>
+            <p>Create tours in all the languages of the world. GWT-Tour supports customizing the language of your tour controls.</p>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="tile">
+            <img class="tile-image big-illustration" src="img/retina.png"/>
+            <h3 class="tile-title">Lightweight Callouts</h3>
+            <p>Create single instance callouts for those times when one is enough.</p>
+          </div>
+        </div>
+      </div>
+
+      <h1 id="general-usage">General Usage</h1>
+
+      <p id="general-use-desc">To get started using the GWT-Tour framework, simply inherit the GwtTour module into your GWT Application <code> &lt;inherits name='com.eemi.gwt.tour.GwtTour'/&gt;</code>. Copy the img folder into the war folder of your GWT application and your are ready to go !.</p>
+
+      <pre><code>
+  &lt;html&gt;
+    &lt;head&gt;
+      &lt;title&gt;My First GWT-Tour&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;h1 id="header"&gt;My First GWT-Tour&lt;/h1&gt;
+      &lt;div id="content"&gt;
+        &lt;p&gt;Content goes here...&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+  &lt;/html&gt;
+      </code></pre>
+
+      <p>Then in your <code>EntryPoint</code> file, define and start your tour.</p>
+
+      <pre><code id="my-first-tour-file">
+  // Define the tour!
+  Tour tour = new Tour("myTour");
+  
+  TourStep step = new TourStep("header", Placement.RIGHT);
+  step.setContent("This is the header of my page");
+  step.setTitle("My Header");
+  tour.addStep(step);
+  
+  step = new TourStep(Document.get().getElementById("content"), Placement.LEFT);
+  step.setContent("THere is where I put my content.");
+  step.setTitle("My content");
+  tour.addStep(step);
+  
+  // Start the tour!
+  <span id="start-tour">GwtTour.startTour(tour);</span>
+      </code></pre>
+
+      <p>That's all there is to it!</p>
+
+      <h1 id="defining-a-tour">Defining a Tour</h1>
+
+      <p>A GWT-Tour tour consists of a tour id, an array(list) of tour steps, and a number of tour-specific options. The tour id is simply a unique identifier string. The simplest tour consists of just an id string and an array of one or more steps.</p>
+
+      <h2 id="basic-step-options">Basic step options</h2>
+
+      <p>The step options below are the most basic options.</p>
+
+      <p>Note that title and content are both optional only because you can choose to have a step with only a title, only content, or both title and content.</p>
+
+      <p>This is an example of a tour defined with only basic steps.</p>
+
+      <div class="row">
+        <!-- div class="span7">
+          <pre><code>
+  {
+    id: {STRING - id of the tour},
+    steps: [
+      {
+        // MANDATORY
+        target: STRING/ELEMENT - id of the target DOM element or DOM element itself,
+        placement: STRING - ["top", "bottom", "right", "left"]
+        // OPTIONAL
+        title: STRING - step title,
+        content: STRING - step content
+      },
+      ...
+    ]
+  };
+          </code></pre>
+        </div-->
+
+
+        <div class="span7">
+          <pre><code id="basic-options">
+     
+     TourStep step1 = new TourStep("header", Placement.BOTTOM);
+     step1.setTite("This is the navigation menu");
+     step1.setContent("Use the links here to get around the site");
+     
+     TourStep step2 = new TourStep("profile-pic", Placement.RIGHT);
+     step2.setTite("Your profile picture");
+     step2.setContent("Upload a profile picture here.");
+     
+     TourStep step2 = new TourStep("inbox", Placement.BOTTOM);
+     step2.setTite("Your inbox");
+     step2.setContent("Messages from other users will appear here.");
+     
+     //create the tour
+     Tour tour = new Tour("welcome-tour");
+     tour.setSteps(step1,step1,step3);
+       </code></pre>
+        </div>
+      </div>
+
+      <p><strong>IMPORTANT</strong> -- title and content are set using element.innerHTML. This allows the inclusion of very basic markup like links and lists. However, it also allows the inclusion of malicious script injections when used improperly. It is highly recommended to never show user-generated content in a GWT-Tour tour. If it is absolutely necessary, you must properly escape the input, as always.</p>
+
+      <h2 id="all-step-options">All step options</h2>
+
+      <p>The comprehensive list of step options are listed below:</p>
+
+      <h3>Mandatory</h3>
+
+      <ul>
+      <li><p><code>setTarget</code> [STRING/ELEMENT/ARRAY] - id of the target DOM element or DOM element itself. It is also possible to define an array of several targets. If an array is provided, Hopscotch will use the first target that exists on the page and disregard the rest.</p></li>
+      <li><p><code>setPlacement</code> [PLACEMENT] - specifies where the bubble should appear in relation to the target. Valid values are "top", "bottom", "right", "left".</p></li>
+      </ul>
+
+      <h3>Optional</h3>
+
+      <ul>
+      <li><p><code>setTitle</code> [STRING] - step title</p></li>
+      <li><p><code>setContent</code> [STRING] - step content</p></li>
+      <li><p><code>setWidth</code> [INT] - bubble width</p></li>
+      <li><p><code>setPadding</code> [INT] - bubble padding</p></li>
+      <li><p><code>setXOffset</code> [INT] - horizontal position adjustment for bubble. <em>Default</em>: 0.</p></li>
+      <li><p><code>setYOffset</code> [INT] - vertical position adjustment for bubble. <em>Default</em>: 0.</p></li>
+      <li><p><code>setArrowOffset</code> [INT] - offset for the bubble arrow. <em>Default</em>: 0.</p></li>
+      <li><p><code>setDelay</code> [INT] - number in milliseconds to wait before showing step. <em>Default</em>: 0.</p></li>
+      <li><p><code>setZindex</code> [INT] - sets the z-index of the bubble</p></li>
+      <li><p><code>setShowNextButton</code> [BOOLEAN] - should show the next button. <em>Default</em>: true.</p></li>
+      <li><p><code>setShowPrevButton</code> [BOOLEAN] - should show the prev button. <em>Default</em>: true.</p></li>
+      <li><p><code>setShowCTAButton</code> [BOOLEAN] - should show the call-to-action button. <em>Default</em>: false.</p></li>
+      <li><p><code>setCtaLabel</code> [STRING] - label for the call-to-action button.</p></li>
+      <li><p><code>setMultipage</code> [BOOLEAN] - indicates that the next step is on a different page. <em>Default</em>: false.</p></li>
+      <li><p><code>setShowSkip</code> [BOOLEAN] - if true, 'Next' button reads 'Skip'. <em>Default</em>: false.</p></li>
+      <li><p><code>setFixedElement</code> [BOOLEAN] - set to true if the target element has fixed positioning. <em>Default</em>: false.</p></li>
+      <li><p><code>setNextOnTargetClick</code> [BOOLEAN] - triggers nextStep() when the target is clicked. <em>Default</em>: false.</p></li>
+      <li><p><code>onPrev</code> [FUNCTION] - callback for when 'Previous' button is clicked}</p></li>
+      <li><p><code>onNext</code> [FUNCTION] - callback for when 'Next' button is clicked}</p></li>
+      <li><p><code>onShow</code> [FUNCTION] - callback for when step is first displayed}</p></li>
+      <li><p><code>onCTA</code> [FUNCTION] - callback for the optional call-to-action button}</p></li>
+      </ul>
+
+      <h2 id="setting-tour-options">Setting tour options</h2>
+
+      <p>These options apply to the entire tour. In cases where there is both a value specified in the tour options and in a step definition, (e.g. "setShowPrevButton") the step definition takes priority. When multiple callbacks are defined in both step and tour options, step callbacks are invoked before tour-wide callbacks.</p>
+
+      <ul>
+      <li><p><code>setBubbleWidth</code> [DOUBLE] - Default bubble width. <em>Default</em>: 280.</p></li>
+      <li><p><code>setBubblePadding</code> [DOUBLE] - Default bubble padding. <em>Default</em>: 15.</p></li>
+      <li><p><code>setSmoothScroll</code> [BOOLEAN] - Should the page scroll smoothly to the next step? <em>Default</em>: true.</p></li>
+      <li><p><code>setScrollDuration</code> [DOUBLE] - Duration of page scroll in milliseconds. Only relevant when smoothScroll is set to true. <em>Default</em>: 1000.</p></li>
+      <li><p><code>setScrollTopMargin</code> [DOUBLE] - When the page scrolls, how much space should there be between the bubble/targetElement and the top of the viewport? <em>Default</em>: 200.</p></li>
+      <li><p><code>setShowCloseButton</code> [BOOLEAN] - Should the tour bubble show a close (X) button? <em>Default</em>: true.</p></li>
+      <li><p><code>setShowPrevButton</code> [BOOLEAN] - Should the bubble have the Previous button? <em>Default</em>: false.</p></li>
+      <li><p><code>setShowNextButton</code> [BOOLEAN] - Should the bubble have the Next button? <em>Default</em>: true.</p></li>
+      <li><p><code>setArrowWidth</code> [DOUBLE] - Default arrow width. (space between the bubble and the targetEl) Used for bubble position calculation. This option is provided for the case where the developer wants to use custom CSS to adjust the size of the arrow. <em>Default</em>: 20.</p></li>
+      <li><p><code>setSkipIfNoElement</code> [BOOLEAN] - If a specified target element is not found, should we skip to the next step? <em>Default</em>: true.</p></li>
+      <li><p><code>setNextOnTargetClick</code> [BOOLEAN] - Should we advance to the next step when the user clicks on the target? <em>Default</em>: false.</p></li>
+      <li><p><code>onNext</code> [FUNCTION] - Invoked after every click on a "Next" button.</p></li>
+      <li><p><code>onPrev</code> [FUNCTION] - Invoked after every click on a "Prev" button.</p></li>
+      <li><p><code>onStart</code> [FUNCTION] - Invoked when the tour is started.</p></li>
+      <li><p><code>onEnd</code> [FUNCTION] - Invoked when the tour ends.</p></li>
+      <li><p><code>onClose</code> [FUNCTION] - Invoked when the user closes the tour before finishing.</p></li>
+      <li><p><code>onError</code> [FUNCTION] - Invoked when the specified target element doesn't exist on the page.</p></li>
+      <li><p><code>setNextBtnText</code> [STRING] - Label for next button</p></li>
+      <li><p><code>setPrevBtnText</code> [STRING] - Label for prev button</p></li>
+      <li><p><code>setDoneBtnText</code> [STRING] - Label for done button</p></li>
+      <li><p><code>setSkipBtnText</code> [STRING] - Label for skip button</p></li>
+      <li><p><code>setCloseTooltip</code> [STRING] - Text for close button tooltip</p></li>
+      <li><p><code>setStepNums</code> [ARRAY<STRING>] - Provide a list of strings to be shown as the step number, based on index of array. Unicode characters are supported. (e.g., ['&#x4e00;', '&#x4e8c;', '&#x4e09;']) If there are more steps than provided numbers, Arabic numerals ('4', '5', '6', etc.) will be used as default.</p></li>
+      </ul>
+
+      <h1 id="api-methods">API Methods</h1>
+
+      <p>The GWT-Tour library comes with a simple set of API calls with which you can run and manage tours:</p>
+
+      <ul>
+      <li><p><code>GwtTour.startTour(tour, stepNum)</code> - Actually starts the tour. Optional stepNum argument specifies what step to start at.</p></li>
+      <li><p><code>GwtTour.showStep(idx)</code> - Skips to a given step in the tour</p></li>
+      <li><p><code>GwtTour.prevStep()</code> - Goes back one step in the tour</p></li>
+      <li><p><code>GwtTour.nextStep()</code> - Goes forward one step in the tour</p></li>
+      <li><p><code>GwtTour.endTour([clearCookie])</code> - Ends the current tour. If clearCookie is set to false, the tour state is preserved. Otherwise, if clearCookie is set to true or is not provided, the tour state is cleared.</p></li>
+      <li><p><code>GwtTour.configure(options)</code> - Sets options for running the tour. See above section "Setting tour options" for a list of configuration options.</p></li>
+      <li><p><code>GwtTour.getCurrTour()</code> - Returns the currently running tour.</p></li>
+      <li><p><code>GwtTour.getCurrStepNum()</code> - Returns the current zero-based step number.</p></li>
+      <li><p><code>GwtTour.getState()</code> - Checks for tour state saved in sessionStorage/cookies and returns the state if it exists. Use this method to determine whether or not you should resume a tour.</p></li>
+      <!--  li><p><code>gwt-tour.listen(eventName, callback)</code> - Adds a callback for one of the event types. Valid event types are: *start*, *end*, *next*, *prev*, *show*, *close*, *error*</p></li>
+      <li><p><code>gwt-tour.unlisten(eventName, callback)</code> - Removes a callback for one of the event types.</p></li>
+      <li><p><code>gwt-tour.removeCallbacks([eventName[, tourOnly]])</code> - Remove callbacks for gwt-tour events. If tourOnly is set to true, only removes callbacks specified by a tour (callbacks set by gwt-tour.configure or gwt-tour.listen will remain). If eventName is null or undefined, callbacks for all events will be removed.</p></li>
+      <li><p><code>gwt-tour.registerHelper(id, fn)</code> - Registers a callback helper. See the section about Helpers below.</p></li>
+      -->
+      <li><p><code>gwt-tour.resetDefaultI18N()</code> - Resets i18n strings to original default values.</p></li>
+      <!-- li><p><code>gwt-tour.resetDefaultOptions()</code> - Resets all config options to original values.</p></li-->
+      </ul>
+
+
+<h1 id="tour-example">Tour Example</h1>
+
+        <pre><code>
+            Tour tour = new Tour("gwt-tour-demo");
+        tour.setScrollTopMargin(100);
+        tour.setShowPrevButton(true);
+
+        TourStep step = new TourStep(Placement.BOTTOM, "gwt-tour-title");
+        step.setTitle("Welcome to GWT-Tour!");
+        step.setContent("Hey there! This is an example tour. There will be plenty of time to read documentation and sample code, but let's just take some time to see how GWT-Tour actually works.");
+        step.centerXOffset();
+        step.centerArrowOffset();
+        tour.addStep(step);
+
+        step = new TourStep(Placement.RIGHT, "general-use-desc");
+        step.setTitle("Where to begin");
+        step.setContent("At the very least, you'll need to include this line in your .gwt xml to get started.");
+        step.setXOffset(-550);
+        tour.addStep(step);
+
+        step = new TourStep(Placement.TOP, "my-first-tour-file");
+        step.setTitle("Define and start your tour");
+        step.setContent("Once you have Gwt-Tour on your page, you're ready to start making your tour! The biggest part of your tour definition will probably be the tour steps.");
+        tour.addStep(step);
+
+        step = new TourStep(Placement.RIGHT, "start-tour");
+        step.setTitle("Starting your tour");
+        step.setContent("After you've created your tour, pass it in to the GwtTour.startTour() method to start it.");
+        step.setYOffset(-25);
+        tour.addStep(step);
+
+        step = new TourStep(Placement.TOP, "basic-options");
+        step.setTitle("Basic step options");
+        step.setContent("These are the most basic step options: <b>target</b>, <b>placement</b>, <b>title</b>, and <b>content</b>. For some steps, they may be all you need.");
+        step.setArrowOffset(100);
+        tour.addStep(step);
+
+        step = new TourStep(Placement.TOP, "api-methods");
+        step.setTitle("Gwt-Tour API methods");
+        step.setContent("Control your tour programmatically using these methods.");
+        tour.addStep(step);
+
+        step = new TourStep(Placement.TOP, "demo-tour");
+        step.setTitle("This tour's code");
+        step.setContent("This is the Java Code for the current tour! Pretty simple, right?");
+        tour.addStep(step);
+        
+        
+        step = new TourStep(Placement.BOTTOM, "gwt-tour-title");
+        step.setTitle("You're all set!");
+        step.setContent("Now go and build some great tours!");
+        step.centerArrowOffset();
+        step.centerXOffset();
+        tour.addStep(step);
+
+        GwtTour.startTour(tour);
+        </code></pre>
+      <h1 id="gwt-tour-callouts">GWT-Tour Callouts</h1>
+
+      <p>Sometimes all you need is a simple callout. You can use Hopscotch Callouts to achieve this.</p>
+
+      <pre><code>
+      Callout callout = new Callout("attach-icon", Placement.BOTTOM);
+      callout.setTitle("Now you can share images &amp;amp; files!");
+      callout.setContent("Share a project you\'re proud of, a photo from a recent event, or an interesting presentation.");
+      GwtTour.createCallout(callout);
+      </code></pre>
+
+      <p>Callouts come with the same options available as tour steps, so you can specify things like width, placement, offsets, and z-index. The most important difference between tour steps and callouts is that you <strong>must</strong> supply an <code>id</code> when creating a callout for later reference.</p>
+
+      <p>All management of callouts is done through the Gwt-Tour Callout Manager. The Callout Manager's job is pretty simple and comes with only a handful of API methods.</p>
+
+      <ul>
+      <li><code>GwtTour.createCallout(options)</code> - Creates callout referenced by an id. Options are the same as tour step options, where applicable.</li>
+      <li><code>GwtTour.removeCallout(id)</code> - Removes the callout for the given id from the page.</li>
+      <li><code>GwtTour.removeAllCallouts()</code> - Removes all registered callouts from the page.</li>
+      </ul>
+<p id="credits"><small>This page was built using <a href="https://github.com/designmodo/Flat-UI">Flat UI from designmodo</a>.</small></p>
+    <p id=""><small>GWT-Tour is made possible by the <a href="http://linkedin.github.io/hopscotch/">Hopscotch Framework</a>.</small></p>
+    </div>
+    <a href="https://github.com/eemi2010/Gwt-Tour"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+ </div>
+  </body>
+    <script type="text/javascript"  src="gwttour/gwttour.nocache.js"></script>
+</html>
