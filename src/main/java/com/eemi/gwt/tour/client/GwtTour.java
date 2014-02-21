@@ -17,6 +17,7 @@ package com.eemi.gwt.tour.client;
 
 import java.util.Random;
 
+import com.eemi.gwt.tour.client.jso.TourPeer;
 import com.google.gwt.core.client.JavaScriptObject;
 
 /**
@@ -72,6 +73,25 @@ public class GwtTour {
      */
     public static native void nextStep()/*-{
 		$wnd.hopscotch.nextStep();
+    }-*/;
+
+    public static native int getCurrStepNum()/*-{
+		return $wnd.hopscotch.getCurrStepNum();
+    }-*/;
+
+
+    public static native String getState()/*-{
+        return $wnd.hopscotch.getState();
+    }-*/;
+
+    public Tour getCurrTour(){
+        TourPeer peer = (TourPeer) _getCurrTour();
+        // TODO: To be implemented
+        return null;
+    }
+
+    private static native JavaScriptObject _getCurrTour()/*-{
+        return $wnd.hopscotch.getCurrTour()
     }-*/;
 
     /**
