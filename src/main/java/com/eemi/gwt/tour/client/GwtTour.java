@@ -120,7 +120,7 @@ public class GwtTour {
      * FIXME: Not yet fully implemented
      * @return
      */
-    public Tour getCurrTour(){
+    public static Tour getCurrTour(){
         TourPeer peer = (TourPeer) _getCurrTour();
         Tour tour = null;
         if (peer != null){
