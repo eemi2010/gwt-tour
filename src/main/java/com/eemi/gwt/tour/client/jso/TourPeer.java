@@ -32,8 +32,16 @@ public class TourPeer extends JavaScriptObject {
 		this.id = value;
     }-*/;
 
+    public final native String getId()/*-{
+		return this.id;
+    }-*/;
+
     public final native void setSteps(JsArray<JavaScriptObject> values)/*-{
 		this.steps = values;
+    }-*/;
+
+    public final native JsArray<JavaScriptObject> getSteps()/*-{
+		return this.steps;
     }-*/;
 
     public final native void onNext(Function callback)/*-{
