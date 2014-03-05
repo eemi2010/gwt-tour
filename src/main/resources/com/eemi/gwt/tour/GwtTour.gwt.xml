@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <inherits name='com.google.gwt.user.User'/>
+  <public path="res" />
+  <script src='hopscotch-0.1.min.js' />
+  <stylesheet src='hopscotch.css' />
+</module>

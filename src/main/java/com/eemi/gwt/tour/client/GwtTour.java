@@ -17,8 +17,12 @@ package com.eemi.gwt.tour.client;
 
 import java.util.Random;
 
-import com.eemi.gwt.tour.client.jso.TourPeer;
+import com.eemi.gwt.tour.client.jso.Function;
+import com.eemi.gwt.tour.client.resources.GwtTourResources;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.ScriptInjector;
+import com.google.gwt.dom.client.StyleInjector;
 
 /**
  * Main GwtTour class
@@ -30,6 +34,25 @@ public class GwtTour {
 
     private GwtTour() {
 
+    }
+    
+    /**
+     * Check if the script is loaded
+     * @return
+     */
+    public static native boolean isLoaded() /*-{
+        return $wnd.hopscotch !== undefined;
+    }-*/;
+    
+    /**
+     * Load the javasccript and the stylesheet by using the ScriptInjector
+     */
+    public static void load() {
+        if (!isLoaded()) {
+            GwtTourResources resources = GWT.create(GwtTourResources.class);
+            StyleInjector.inject(resources.css().getText());
+            ScriptInjector.fromString(resources.js().getText()).setWindow(ScriptInjector.TOP_WINDOW).inject();
+        }
     }
 
     /**
@@ -146,6 +169,33 @@ public class GwtTour {
         return Long.toString(Math.abs(random.nextLong()), 36);
     }
 
+    /**
+     *  Checks for tour state saved in sessionStorage/cookies and returns the state if it exists. Use this method to determine whether or not you should resume a tour.
+      * @return
+     */
+    public static native String getState()/*-{
+        $wnd.hopscotch.getState();
+    }-*/;
+
+    /**
+     * Adds a callback for one of the event types. Valid event types are: start, end, next, prev, show, close, error
+     * @param event , the event  to listen to
+     * @param callback ,the callback to call when the event occurs.
+     */
+
+    public static native  void listen(String event, Function callback)/*-{
+        $wnd.hopscotch.listen(event,function(){
+          callback.@com.eemi.gwt.tour.client.jso.Function::execute()();
+        });
+    }-*/;
+
+
+    public static native  void unlisten(String event, Function callback)/*-{
+        $wnd.hopscotch.unlisten(event,function(){
+            callback.@com.eemi.gwt.tour.client.jso.Function::execute()();
+        });
+    }-*/;
+
     private static native void _startTour(JavaScriptObject tour)/*-{
 		$wnd.hopscotch.startTour(tour);
     }-*/;
@@ -157,5 +207,7 @@ public class GwtTour {
     private static native void _createCallOut(JavaScriptObject callout)/*-{
 		$wnd.hopscotch.getCalloutManager().createCallout(callout);
     }-*/;
+
+
 
 }

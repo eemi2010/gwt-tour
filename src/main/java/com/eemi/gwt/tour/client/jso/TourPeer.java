@@ -25,9 +25,7 @@ public class TourPeer extends JavaScriptObject {
     }
 
     public static native TourPeer newInstance()/*-{
-		return {
-            i18n : {}
-        };
+		return {i18n:{},steps:[]};
     }-*/;
 
     public final native void setId(String value)/*-{
