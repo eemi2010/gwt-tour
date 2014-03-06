@@ -15,12 +15,17 @@
 **************************************************************************/
 package com.eemi.gwt.tour.client;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import com.eemi.gwt.tour.client.jso.Function;
+import com.eemi.gwt.tour.client.jso.TourPeer;
 import com.eemi.gwt.tour.client.resources.GwtTourResources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.dom.client.StyleInjector;
 
@@ -98,6 +103,46 @@ public class GwtTour {
 		$wnd.hopscotch.nextStep();
     }-*/;
 
+    public static native int getCurrStepNum()/*-{
+		return $wnd.hopscotch.getCurrStepNum();
+    }-*/;
+
+    /**
+     *  Checks for tour state saved in sessionStorage/cookies and returns the state if it exists. Use this method to determine whether or not you should resume a tour.
+     * @return
+     */
+    public static native String getState()/*-{
+        return $wnd.hopscotch.getState();
+    }-*/;
+
+    /**
+     * Returns the currently running tour.
+     * FIXME: Not yet fully implemented
+     * @return
+     */
+    public static Tour getCurrTour(){
+        TourPeer peer = (TourPeer) _getCurrTour();
+        Tour tour = null;
+        if (peer != null){
+            tour = new Tour(peer.getId());
+            JsArray<JavaScriptObject> arr = peer.getSteps();
+            List<TourStep> steps = null;
+            for (int i = 0; i < arr.length(); i++) {
+                if (steps == null){
+                    steps = new LinkedList<TourStep>();
+                }
+                JavaScriptObject jso = arr.get(i);
+                TourStep step = new TourStep();
+                // TODO: Get data from jso into step
+            }
+        }
+        return tour;
+    }
+
+    private static native JavaScriptObject _getCurrTour()/*-{
+        return $wnd.hopscotch.getCurrTour()
+    }-*/;
+
     /**
      * Ends the current tour.
      */
@@ -149,14 +194,6 @@ public class GwtTour {
         Random random = new Random();
         return Long.toString(Math.abs(random.nextLong()), 36);
     }
-
-    /**
-     *  Checks for tour state saved in sessionStorage/cookies and returns the state if it exists. Use this method to determine whether or not you should resume a tour.
-      * @return
-     */
-    public static native String getState()/*-{
-        $wnd.hopscotch.getState();
-    }-*/;
 
     /**
      * Adds a callback for one of the event types. Valid event types are: start, end, next, prev, show, close, error
