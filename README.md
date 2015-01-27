@@ -27,7 +27,7 @@ or add this to your POM:
 Dependency
 --------------
 
-        <dependency>
+	<dependency>
 		<groupId>com.eemi.gwt</groupId>
 		<artifactId>tour</artifactId>
 		<version>1.0-SNAPSHOT</version>		
