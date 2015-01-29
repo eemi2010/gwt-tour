@@ -106,12 +106,12 @@
   // Define the tour!
   Tour tour = new Tour("myTour");
   
-  TourStep step = new TourStep(Placement.RIGHT, "header");
+  TourStep step = new TourStep("header", Placement.RIGHT);
   step.setContent("This is the header of my page");
   step.setTitle("My Header");
   tour.addStep(step);
   
-  step = new TourStep(Placement.LEFT, Document.get().getElementById("content"));
+  step = new TourStep(Document.get().getElementById("content"), Placement.LEFT);
   step.setContent("THere is where I put my content.");
   step.setTitle("My content");
   tour.addStep(step);
@@ -273,7 +273,7 @@
 <h1 id="tour-example">Tour Example</h1>
 
         <pre><code>
-            Tour tour = new Tour("gwt-tour-demo");
+        Tour tour = new Tour("gwt-tour-demo");
         tour.setScrollTopMargin(100);
         tour.setShowPrevButton(true);
 
@@ -332,10 +332,10 @@
       <p>Sometimes all you need is a simple callout. You can use Hopscotch Callouts to achieve this.</p>
 
       <pre><code>
-      Callout callout = new Callout("attach-icon", Placement.BOTTOM);
+      CallOut callout = new CallOut("attach-icon", Placement.BOTTOM);
       callout.setTitle("Now you can share images &amp;amp; files!");
       callout.setContent("Share a project you\'re proud of, a photo from a recent event, or an interesting presentation.");
-      GwtTour.createCallout(callout);
+      GwtTour.createCallOut(callout);
       </code></pre>
 
       <p>Callouts come with the same options available as tour steps, so you can specify things like width, placement, offsets, and z-index. The most important difference between tour steps and callouts is that you <strong>must</strong> supply an <code>id</code> when creating a callout for later reference.</p>
@@ -343,9 +343,9 @@
       <p>All management of callouts is done through the Gwt-Tour Callout Manager. The Callout Manager's job is pretty simple and comes with only a handful of API methods.</p>
 
       <ul>
-      <li><code>GwtTour.createCallout(options)</code> - Creates callout referenced by an id. Options are the same as tour step options, where applicable.</li>
-      <li><code>GwtTour.removeCallout(id)</code> - Removes the callout for the given id from the page.</li>
-      <li><code>GwtTour.removeAllCallouts()</code> - Removes all registered callouts from the page.</li>
+      <li><code>GwtTour.createCallOut(options)</code> - Creates callout referenced by an id. Options are the same as tour step options, where applicable.</li>
+      <li><code>GwtTour.removeCallOut(id)</code> - Removes the callout for the given id from the page.</li>
+      <li><code>GwtTour.removeAllCallOuts()</code> - Removes all registered callouts from the page.</li>
       </ul>
 <p id="credits"><small>This page was built using <a href="https://github.com/designmodo/Flat-UI">Flat UI from designmodo</a>.</small></p>
     <p id=""><small>GWT-Tour is made possible by the <a href="http://linkedin.github.io/hopscotch/">Hopscotch Framework</a>.</small></p>
