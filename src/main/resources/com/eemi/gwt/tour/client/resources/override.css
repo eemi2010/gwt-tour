@@ -1,0 +1,9 @@
+@external hopscotch-bubble;
+@external hopscotch-bubble-close;
+@external hopscotch-bubble-number;
+@url sprite sprite;
+
+div.hopscotch-bubble .hopscotch-bubble-close,
+div.hopscotch-bubble .hopscotch-bubble-number {
+	background-image: sprite;
+}

@@ -42,11 +42,11 @@
 	</dependencies>
 
 	<build>
-
-		<!-- Include .gwt.xml -->
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<!-- Include GwtTourScriptLoader.gwt.xml -->
 		<resources>
 			<resource>
-				<directory>src/main/java</directory>
+				<directory>src/main/resources</directory>
 			</resource>
 		</resources>
 
