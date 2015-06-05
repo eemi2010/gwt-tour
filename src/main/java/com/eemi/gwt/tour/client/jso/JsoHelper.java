@@ -305,8 +305,8 @@ public class JsoHelper {
                 JsoHelper.setArrayValue(jsArray, i, ((JavaScriptObject) val));
             } else if (val instanceof Object[]) {
                 JsoHelper.setArrayValue(jsArray, i, convertToJavaScriptArray((Object[]) val));
-            } else if (val instanceof Object) {
-                JsoHelper.setArrayValue(jsArray, i, ((Object) val));
+            } else  {
+                JsoHelper.setArrayValue(jsArray, i, val);
             }
         }
         return jsArray;
