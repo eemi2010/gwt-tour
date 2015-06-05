@@ -15,7 +15,6 @@
 **************************************************************************/
 package com.eemi.gwt.tour.client;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -131,8 +130,8 @@ public class GwtTour {
                 if (steps == null){
                     steps = new LinkedList<TourStep>();
                 }
-                JavaScriptObject jso = arr.get(i);
-                TourStep step = new TourStep();
+                // JavaScriptObject jso = arr.get(i);
+                // TourStep step = new TourStep();
                 // TODO: Get data from jso into step
             }
         }

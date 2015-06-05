@@ -25,6 +25,7 @@ public class GwtTourDemo implements EntryPoint {
     /**
      * This is the entry point method.
      */
+    @Override
     public void onModuleLoad() {
         UIController.start();
     }
